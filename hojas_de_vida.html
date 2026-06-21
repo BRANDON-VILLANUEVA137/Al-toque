@@ -315,7 +315,8 @@ const TEMPLATES = [
     kicker: "Formato clásico colombiano",
     desc: "El formato más usado en Colombia para empleos operativos, de servicios y oficios. Datos personales, educación, experiencia laboral y referencias en 2 páginas.",
     pages: "2 páginas", format: "PDF", size: "Carta",
-    url: "Hoja_de_Vida_1003.pdf"
+    url: "Hoja_de_Vida_1003.pdf",
+    urlEditable: "https://sancarga.com/doc/minerva.pdf"
   }
   // Agrega aquí más objetos como este por cada PDF que subas, por ejemplo:
   // {
@@ -332,6 +333,9 @@ function checkIcon(){
 }
 function downloadIcon(){
   return '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>';
+}
+function editIcon(){
+  return '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>';
 }
 
 const grid = document.getElementById('grid');
@@ -359,7 +363,10 @@ grid.innerHTML = TEMPLATES.map(t => `
       </div>
     </div>
     <div class="card-footer">
-      <a class="go-btn" href="${t.url}" download>Descargar PDF ${downloadIcon()}</a>
+      <div style="display:flex; gap:8px; flex:1;">
+        <a class="go-btn" href="${t.url}" download style="flex:1;">Descargar PDF ${downloadIcon()}</a>
+        ${t.urlEditable ? `<a class="go-btn" href="${t.urlEditable}" target="_blank" rel="noopener noreferrer" style="flex:1;">Editar Online ${editIcon()}</a>` : ''}
+      </div>
       <div class="seal">${checkIcon()}</div>
     </div>
   </article>
