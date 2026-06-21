@@ -153,6 +153,23 @@
   .seal svg{width:20px; height:20px; stroke:var(--red);}
   .card:hover .seal{ transform:rotate(0deg) scale(1.12); opacity:1; }
 
+  /* ===== Card Image ===== */
+  .card-image{
+    height:160px; width:100%; background:var(--navy-2);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden; position:relative;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+  }
+  .card-image img{
+    width:100%; height:100%; object-fit:cover; transition:transform .3s ease;
+  }
+  .card:hover .card-image img{transform:scale(1.05);}
+  .card-image.fallback{
+    background:linear-gradient(135deg, var(--gold) 0%, var(--red) 100%);
+    color:var(--navy); font-weight:800; font-size:2rem;
+    font-family:'Bricolage Grotesque', sans-serif;
+  }
+
   .hidden{display:none !important;}
   .empty-state{
     grid-column:1/-1; text-align:center; padding:60px 20px;
@@ -170,7 +187,7 @@
 <div class="desk">
 
 <nav class="topnav">
-  <a class="brand-mini" href="./index.html">AL <em>TOQUE</em></a>
+  <a class="brand-mini" href="./index.html">ALL <em>TOQUE</em></a>
   <div class="nav-links">
     <a href="./index.html">Inicio</a>
     <a href="./certificados.html">Certificados</a>
@@ -224,35 +241,40 @@ const DATA = [
         name: "Bolsa de empleo de El Tiempo",
         desc: "Una de las más consolidadas en Colombia, fuerte en cargos profesionales, técnicos y tecnólogos. Incluye simulador salarial y guías de hoja de vida.",
         tag: "General",
-        url: "https://www.elempleo.com/co/"
+        url: "https://www.elempleo.com/co/",
+        img: null
       },
       {
         entity: "Computrabajo Colombia",
         name: "Bolsa de empleo y vacantes",
         desc: "Una de las bolsas más grandes de Latinoamérica. Gran volumen de vacantes operativas, de ventas, logística y call center.",
         tag: "General",
-        url: "https://co.computrabajo.com/"
+        url: "https://co.computrabajo.com/",
+        img: null
       },
       {
         entity: "Magneto Empleos",
         name: "Vacantes y procesos de selección",
         desc: "Más de 100.000 vacantes activas. Procesos con pruebas psicotécnicas y entrevistas en video integradas en la misma plataforma.",
         tag: "General",
-        url: "https://www.magneto365.com/es"
+        url: "https://www.magneto365.com/es",
+        img: null
       },
       {
         entity: "Indeed Colombia",
         name: "Buscador de ofertas de empleo",
         desc: "Agrega vacantes de muchas fuentes a la vez. Permite postularte directo y crear alertas de empleo por cargo o ciudad.",
         tag: "General",
-        url: "https://co.indeed.com/"
+        url: "https://co.indeed.com/",
+        img: null
       },
       {
         entity: "LinkedIn",
         name: "Empleos y red profesional",
         desc: "Más usada para cargos profesionales, ejecutivos y especializados. Útil además para hacer networking con reclutadores.",
         tag: "General",
-        url: "https://www.linkedin.com/jobs/"
+        url: "https://www.linkedin.com/jobs/",
+        img: null
       }
     ]
   },
@@ -266,14 +288,16 @@ const DATA = [
         name: "SIMO — Concursos de mérito del Estado",
         desc: "Plataforma oficial para inscribirte a convocatorias de carrera administrativa en entidades públicas colombianas.",
         tag: "Público",
-        url: "https://simo.cnsc.gov.co/"
+        url: "https://simo.cnsc.gov.co/",
+        img: null
       },
       {
         entity: "Ministerio del Trabajo",
         name: "Servicio Público de Empleo (SPE)",
         desc: "Bolsa de empleo gratuita del Estado, articulada con agencias de empleo en todo el país. Incluye el programa Empleo Sin Barreras.",
         tag: "Público",
-        url: "https://www.serviciodeempleo.gov.co/"
+        url: "https://www.serviciodeempleo.gov.co/",
+        img: null
       }
     ]
   },
@@ -287,14 +311,16 @@ const DATA = [
         name: "Proyectos freelance en Latinoamérica",
         desc: "Una de las plataformas freelance más grandes de la región. Diseño, desarrollo, redacción, marketing y más, pagados por proyecto.",
         tag: "Freelance",
-        url: "https://www.workana.com/"
+        url: "https://www.workana.com/",
+        img: null
       },
       {
         entity: "Upwork",
         name: "Trabajo freelance internacional",
         desc: "Plataforma global de freelancing. Perfiles en inglés recomendados; permite fijar tarifa por hora o por proyecto.",
         tag: "Freelance",
-        url: "https://www.upwork.com/"
+        url: "https://www.upwork.com/",
+        img: null
       }
     ]
   }
@@ -310,6 +336,9 @@ function checkIcon(){
 }
 function arrowIcon(){
   return '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>';
+}
+function getInitials(text){
+  return text.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
 }
 
 function render(filterText, activeCat){
@@ -337,6 +366,12 @@ function render(filterText, activeCat){
       <div class="grid">
         ${matches.map(it => `
           <article class="card">
+            <div class="card-image ${!it.img ? 'fallback' : ''}">
+              ${it.img 
+                ? `<img src="${it.img}" alt="${it.entity}" onerror="this.parentElement.classList.add('fallback'); this.parentElement.textContent='${getInitials(it.entity)}';">`
+                : `<span>${getInitials(it.entity)}</span>`
+              }
+            </div>
             <div class="card-body">
               <p class="card-entity">${it.entity}</p>
               <h3>${it.name}</h3>
