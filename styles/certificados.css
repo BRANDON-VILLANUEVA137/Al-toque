@@ -1,0 +1,18 @@
+/* Certificados-specific styles */
+header{padding:64px 28px 40px}
+.stamp-corner{position:absolute; top:48px; right:28px; width:84px; height:84px; border:2px solid var(--red); border-radius:50%; display:flex; align-items:center; justify-content:center; transform:rotate(-12deg); opacity:.85}
+.stamp-corner span{font-family:'JetBrains Mono', monospace; font-size:.56rem; letter-spacing:.08em; text-align:center; color:var(--red); line-height:1.25; text-transform:uppercase}
+.controls{max-width:1080px; margin:0 auto; padding:0 28px 28px; position:sticky; top:0; z-index:5; background:linear-gradient(var(--navy) 78%, transparent); padding-top:18px}
+.search-row{display:flex; align-items:center; gap:12px; background:var(--navy-2); border:1px solid var(--line); border-radius:10px; padding:14px 18px}
+#search{flex:1; background:transparent; border:none; outline:none; color:var(--paper-2); font-family:'JetBrains Mono', monospace; font-size:.95rem}
+#search::placeholder{color:rgba(236,227,198,0.45)}
+#count{font-family:'JetBrains Mono', monospace; font-size:.78rem; color:var(--gold); white-space:nowrap}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+.chip{font-family:'JetBrains Mono', monospace; font-size:.74rem; letter-spacing:.03em; padding:7px 14px; border-radius:999px; border:1px solid var(--line); background:transparent; color:rgba(236,227,198,0.75); cursor:pointer; transition:.15s ease}
+.chip:hover{border-color:var(--gold); color:var(--paper-2)}
+.chip.active{background:var(--gold); color:var(--navy); border-color:var(--gold); font-weight:600}
+.category-head{display:flex; align-items:baseline; gap:14px; border-bottom:1px solid var(--line); padding-bottom:10px; margin-bottom:20px}
+.category-head h2{font-size:1.5rem; color:var(--paper-2)}
+.category-head .cat-code{font-family:'JetBrains Mono', monospace; font-size:.74rem; color:var(--gold)}
+
+@media (max-width:560px){.stamp-corner{display:none}.controls{position:static}}

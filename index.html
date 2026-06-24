@@ -3,168 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Al Toque — Accesos directos para trabajar en Colombia</title>
-<meta name="description" content="Al Toque: directorio de accesos directos a certificados, hojas de vida, y bolsas de empleo en Colombia. Todo lo que necesitas para trabajar en un solo lugar.">
+<title>ALL TOQUE — HOME</title>
+<meta name="description" content="ALL TOQUE: directorio de accesos directos a certificados, hojas de vida, y bolsas de empleo en Colombia. Todo lo que necesitas para trabajar en un solo lugar.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --navy:#0E1A2B;
-    --navy-2:#16273F;
-    --paper:#ECE3C6;
-    --paper-2:#F5EFDC;
-    --red:#B23A2C;
-    --gold:#C49A3A;
-    --ink:#1B1812;
-    --ink-soft:#5B5644;
-    --line: rgba(236,227,198,0.16);
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--navy);
-    color:var(--paper);
-    font-family:'Source Serif 4', serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  .eyebrow{
-    font-family:'JetBrains Mono', monospace;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    font-size:.72rem;
-    color:var(--gold);
-  }
-  h1,h2,h3{ font-family:'Bricolage Grotesque', sans-serif; margin:0; }
-  a{color:inherit;}
-
-  .desk{
-    background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 38px, var(--line) 39px),
-      radial-gradient(ellipse at 20% -10%, rgba(196,154,58,0.10), transparent 50%);
-  }
-
-  /* ===== Nav ===== */
-  nav.topnav{
-    max-width:1080px; margin:0 auto; padding:28px 28px 0;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .brand-mini{
-    font-family:'Bricolage Grotesque', sans-serif; font-weight:800; font-size:1.05rem;
-    letter-spacing:-.01em; color:var(--paper-2); text-decoration:none;
-  }
-  .brand-mini em{font-style:normal; color:var(--gold);}
-  .nav-links{
-    display:flex; gap:22px; font-family:'JetBrains Mono', monospace;
-    font-size:.74rem; letter-spacing:.04em; text-transform:uppercase;
-  }
-  .nav-links a{
-    text-decoration:none; color:rgba(236,227,198,0.6);
-    padding-bottom:4px; border-bottom:2px solid transparent; transition:.15s ease;
-  }
-  .nav-links a:hover{color:var(--paper-2);}
-  .nav-links a.active{color:var(--gold); border-color:var(--gold);}
-  @media (max-width:640px){
-    nav.topnav{flex-direction:column; align-items:flex-start; gap:14px; padding-top:24px;}
-    .nav-links{flex-wrap:wrap; gap:14px 18px;}
-  }
-
-  /* ===== Header ===== */
-  header{ max-width:1080px; margin:0 auto; padding:48px 28px 64px; position:relative; }
-  .id-stripe{ height:6px; width:64px; background:var(--red); margin-bottom:18px; border-radius:2px; }
-  h1.title{
-    font-size:clamp(3.2rem, 9vw, 6.2rem); font-weight:800; line-height:.92;
-    letter-spacing:-.02em; color:var(--paper-2);
-  }
-  h1.title em{font-style:normal; color:var(--gold);}
-  .tagline{ max-width:680px; margin-top:20px; font-size:1.15rem; color:rgba(236,227,198,0.82); line-height:1.55; }
-
-  /* ===== Main Content ===== */
-  main{max-width:1080px; margin:0 auto; padding:0 28px 60px;}
-
-  .dashboard-intro{
-    font-size:1.08rem; color:rgba(236,227,198,0.75); line-height:1.6;
-    margin-bottom:42px; max-width:720px;
-  }
-  .dashboard-intro strong{color:var(--paper-2);}
-
-  .modules-grid{
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:24px; margin-bottom:48px;
-  }
-
-  .module-card{
-    background:var(--navy-2); border:1px solid var(--line); border-radius:8px;
-    padding:32px 28px; position:relative; overflow:hidden;
-    display:flex; flex-direction:column;
-    box-shadow:0 14px 28px -16px rgba(0,0,0,0.3);
-    transition:transform .25s ease, box-shadow .25s ease;
-  }
-  .module-card:hover{transform:translateY(-4px); box-shadow:0 20px 40px -12px rgba(0,0,0,0.4);}
-
-  .module-card::before{
-    content:"";
-    position:absolute;
-    top:0; left:0; right:0;
-    height:4px;
-    background:linear-gradient(90deg, var(--red), var(--gold));
-  }
-
-  .module-icon{
-    font-size:2.4rem; margin-bottom:12px; line-height:1;
-  }
-
-  .module-card h2{
-    font-size:1.6rem; color:var(--paper-2); margin-bottom:12px; line-height:1.2;
-  }
-
-  .module-card p{
-    font-size:.95rem; color:rgba(236,227,198,0.72); line-height:1.6;
-    margin:0 0 20px; flex:1;
-  }
-
-  .module-link{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'JetBrains Mono', monospace; font-size:.82rem; font-weight:600;
-    text-decoration:none; color:var(--gold);
-    padding-bottom:4px; border-bottom:1.5px solid transparent;
-    transition:border-color .15s ease;
-  }
-  .module-link:hover{border-color:var(--gold);}
-
-  .stats-bar{
-    background:var(--navy-2); border:1px solid var(--line); border-radius:8px;
-    padding:24px 28px; margin-bottom:40px;
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:28px;
-  }
-  .stat{
-    text-align:center;
-  }
-  .stat-number{
-    font-size:2.2rem; font-weight:800; color:var(--gold); font-family:'Bricolage Grotesque', sans-serif;
-  }
-  .stat-label{
-    font-family:'JetBrains Mono', monospace; font-size:.75rem; letter-spacing:.06em;
-    text-transform:uppercase; color:rgba(236,227,198,0.6); margin-top:6px;
-  }
-
-  footer{ max-width:1080px; margin:0 auto; padding:50px 28px 70px; border-top:1px solid var(--line); }
-  footer p{ font-size:.88rem; line-height:1.6; color:rgba(236,227,198,0.62); max-width:680px; }
-  footer .stamp-foot{ font-family:'JetBrains Mono', monospace; font-size:.72rem; color:var(--gold); margin-top:20px; letter-spacing:.04em; }
-
-  @media (max-width:560px){
-    header{ padding:36px 28px 48px; }
-    .modules-grid{ gap:18px; }
-    .module-card{ padding:24px 20px; }
-  }
-</style>
+<link rel="stylesheet" href="styles/global.css">
+<link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
 <div class="desk">
 
 <nav class="topnav">
   <a class="brand-mini" href="./index.html">ALL <em>TOQUE</em></a>
-  <div class="nav-links">
+  <div class="nav-actions">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">☰</button>
+  </div>
+  <div class="nav-links" id="nav-links">
     <a href="./index.html" class="active">Inicio</a>
     <a href="./certificados.html">Certificados</a>
     <a href="./hojas_de_vida.html">Hojas de vida</a>
@@ -181,7 +36,7 @@
 
 <main>
   <p class="dashboard-intro">
-    <strong>Al Toque</strong> te conecta con los recursos y plataformas más usadas para conseguir empleo en Colombia. 
+    <strong>ALL TOQUE</strong> te conecta con los recursos y plataformas más usadas para conseguir empleo en Colombia. 
     Acceso directo, sin intermediarios. Explora los tres módulos principales:
   </p>
 
@@ -225,10 +80,11 @@
 </main>
 
 <footer>
-  <p><strong style="color:var(--paper-2)">Al Toque</strong> es un directorio no oficial de accesos directos a trámites y plataformas de empleo en Colombia. Cada enlace te conecta con las entidades y plataformas oficiales; nosotros no almacenamos datos ni intermediamos en ningún proceso.</p>
+  <p><strong style="color:var(--paper-2)">ALL TOQUE</strong> es un directorio no oficial de accesos directos a trámites y plataformas de empleo en Colombia. Cada enlace te conecta con las entidades y plataformas oficiales; nosotros no almacenamos datos ni intermediamos en ningún proceso.</p>
   <p class="stamp-foot">DIRECTORIO VERIFICADO · JUNIO 2026</p>
 </footer>
 
+<script src="scripts/nav.js"></script>
 </div>
 </body>
 </html>
