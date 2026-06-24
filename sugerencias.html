@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sugerencias — ALL TOQUE</title>
+<meta name="description" content="Envía sugerencias de nuevos enlaces o mejoras para ALL TOQUE a través de un formulario seguro con Formspree.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/global.css">
+<link rel="stylesheet" href="styles/sugerencias.css">
+</head>
+<body>
+<div class="desk">
+
+<nav class="topnav">
+  <a class="brand-mini" href="./index.html">ALL <em>TOQUE</em></a>
+  <div class="nav-actions">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">☰</button>
+  </div>
+  <div class="nav-links" id="nav-links">
+    <a href="./index.html">Inicio</a>
+    <a href="./certificados.html">Certificados</a>
+    <a href="./hojas_de_vida.html">Hojas de vida</a>
+    <a href="./Buscar_Empleo.html">Buscar empleo</a>
+    <a href="./acerca.html">Acerca</a>
+    <a href="./sugerencias.html" class="active">Sugerencias</a>
+  </div>
+</nav>
+
+<header>
+  <div class="id-stripe"></div>
+  <p class="eyebrow">SUGERENCIAS Y ENLACES</p>
+  <h1 class="title">FORMULARIO<br><em>DE SUGERENCIAS</em></h1>
+  <p class="tagline">¿Tienes una plataforma útil que falta en el directorio? Cuéntanos cuál es el enlace, para qué sirve y por qué lo recomiendas.</p>
+</header>
+
+<main>
+  <section class="content-block">
+    <p>Usamos Formspree para enviar tus sugerencias directamente a <strong>ALL_TOQUE@hotmail.com</strong> sin almacenar datos en el sitio. Completa el formulario abajo y tu sugerencia será recibida en tiempo real.</p>
+  </section>
+
+  <section class="form-card">
+    <form action="https://formspree.io/f/mwvdvdlq" method="POST">
+      <input type="hidden" name="_subject" value="Sugerencia ALL TOQUE">
+      <input type="hidden" name="_autoresponse" value="Gracias por tu sugerencia. La revisaremos pronto.">
+      <label class="form-field">
+        <span>Nombre</span>
+        <input type="text" name="name" placeholder="Tu nombre" required>
+      </label>
+      <label class="form-field">
+        <span>Correo electrónico</span>
+        <input type="email" name="email" placeholder="correo@ejemplo.com" required>
+      </label>
+      <label class="form-field">
+        <span>Enlace sugerido</span>
+        <input type="url" name="website" placeholder="https://" required>
+      </label>
+      <label class="form-field">
+        <span>Descripción</span>
+        <textarea name="message" rows="6" placeholder="¿Por qué es útil este enlace?" required></textarea>
+      </label>
+      <label class="form-field small">
+        <span>Sección</span>
+        <select name="category" required>
+          <option value="Certificados">Certificados</option>
+          <option value="Hojas de Vida">Hojas de Vida</option>
+          <option value="Buscar Empleo">Buscar Empleo</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </label>
+      <button type="submit" class="primary-btn">Enviar sugerencia</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p><strong>ALL TOQUE</strong> es un directorio independiente de enlaces. No estamos afiliados a ninguna entidad oficial del Estado colombiano, no almacenamos datos personales y no cobramos por ningún trámite. Cada vínculo te lleva al sitio o plataforma oficial.</p>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h3>Enlaces</h3>
+      <ul class="footer-links">
+        <li><a href="./acerca.html">Acerca</a></li>
+        <li><a href="./sugerencias.html">Sugerencias</a></li>
+        <li><a href="./certificados.html">Certificados</a></li>
+        <li><a href="./Buscar_Empleo.html">Buscar empleo</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contacto</h3>
+      <p><a href="https://formspree.io/f/mwvdvdlq">ALL_TOQUE@hotmail.com</a></p>
+      <p>Colombia</p>
+    </div>
+    <div class="footer-col">
+      <h3>Redes</h3>
+      <ul class="social-links">
+        <li><a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="stamp-foot">DIRECTORIO VERIFICADO · JUNIO 2026</p>
+</footer>
+
+<button class="back-to-top" aria-label="Volver arriba">↑</button>
+
+<script>
+if(window.location.search.includes('thanks=1')){
+  const message = document.createElement('div');
+  message.className = 'form-success';
+  message.textContent = 'Gracias, tu sugerencia fue enviada. Actualiza el sitio con un ID válido de Formspree para recibir notificaciones reales.';
+  document.querySelector('main').prepend(message);
+}
+</script>
+
+<script src="scripts/nav.js"></script>
+</div>
+</body>
+</html>
