@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sugerencias — ALL TOQUE</title>
-<meta name="description" content="Envía sugerencias de nuevos enlaces o mejoras para ALL TOQUE a través de un formulario seguro con Formspree.">
+<meta name="description" content="Envía sugerencias de nuevos enlaces o mejoras para ALL TOQUE. Formulario protegido con reCAPTCHA v3.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;600&display=swap" rel="stylesheet">
@@ -38,11 +38,12 @@
 
 <main>
   <section class="content-block">
-    <p>Usamos Formspree para enviar tus sugerencias directamente a <strong>ALL_TOQUE@hotmail.com</strong> sin almacenar datos en el sitio. Completa el formulario abajo y tu sugerencia será recibida en tiempo real.</p>
+    <p>Usamos Formspree para enviar tus sugerencias directamente a <strong>ALL_TOQUE@hotmail.com</strong> sin almacenar datos en el sitio. El formulario está protegido con reCAPTCHA v3 de Google para evitar spam. Completa los campos y tu sugerencia será recibida en tiempo real.</p>
   </section>
 
   <section class="form-card">
-    <form action="https://formspree.io/f/mwvdvdlq" method="POST">
+    <div id="form-message" style="display:none; margin-bottom:16px; padding:12px; border-radius:8px;"></div>
+    <form id="suggestion-form">
       <!-- Honeypot field to reduce spam bots: legitimate users won't fill this -->
       <input type="text" name="_gotcha" style="display:none!important" tabindex="-1" autocomplete="off">
       <input type="hidden" name="_subject" value="Sugerencia ALL TOQUE">
@@ -72,7 +73,7 @@
           <option value="Otro">Otro</option>
         </select>
       </label>
-      <button type="submit" class="primary-btn">Enviar sugerencia</button>
+      <button type="submit" class="primary-btn" id="submit-btn" disabled>Cargando reCAPTCHA…</button>
     </form>
   </section>
 </main>
@@ -98,7 +99,7 @@
       <h3>Redes</h3>
       <ul class="social-links">
         <li><a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn (No hay hasta el momento)</a></li>
-        <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter(No hay hasta el momento)</a></li>
+        <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter (No hay hasta el momento)</a></li>
       </ul>
     </div>
   </div>
@@ -108,12 +109,109 @@
 <button class="back-to-top" aria-label="Volver arriba">↑</button>
 
 <script>
-if(window.location.search.includes('thanks=1')){
-  const message = document.createElement('div');
-  message.className = 'form-success';
-  message.textContent = 'Gracias, tu sugerencia fue enviada. Actualiza el sitio con un ID válido de Formspree para recibir notificaciones reales.';
-  document.querySelector('main').prepend(message);
+// ─── Cargar Site Key desde Netlify Function y luego reCAPTCHA ───
+let RECAPTCHA_SITE_KEY = '';
+
+async function initRecaptcha() {
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Cargando reCAPTCHA…';
+  try {
+    const res = await fetch('/.netlify/functions/verify-recaptcha');
+    const data = await res.json();
+    if (!data.siteKey) throw new Error('No se recibió Site Key');
+
+    RECAPTCHA_SITE_KEY = data.siteKey;
+    window.__RECAPTCHA_SITE_KEY = data.siteKey;
+
+    // Cargar script de reCAPTCHA dinámicamente
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      btn.textContent = 'Enviar sugerencia';
+      btn.disabled = false;
+    };
+    script.onerror = () => {
+      showMessage('Error al cargar reCAPTCHA. Recarga la página.', 'error');
+      btn.textContent = 'Error de carga';
+    };
+    document.head.appendChild(script);
+  } catch (err) {
+    console.error('Error cargando Site Key:', err);
+    showMessage('Error de configuración del servidor.', 'error');
+    btn.textContent = 'Intenta más tarde';
+  }
 }
+
+const form = document.getElementById('suggestion-form');
+const submitBtn = document.getElementById('submit-btn');
+const messageDiv = document.getElementById('form-message');
+
+function showMessage(text, type) {
+  messageDiv.textContent = text;
+  messageDiv.className = type === 'success' ? 'form-success' : 'form-error';
+  messageDiv.style.display = 'block';
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  messageDiv.style.display = 'none';
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Verificando...';
+
+  try {
+    // Obtener token de reCAPTCHA v3
+    const token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit_suggestion' });
+    if (!token) {
+      showMessage('Error de verificación. Por favor recarga la página.', 'error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar sugerencia';
+      return;
+    }
+
+    // Verificar token con Netlify Function
+    const verifyRes = await fetch('/.netlify/functions/verify-recaptcha', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+
+    const verifyData = await verifyRes.json();
+    if (!verifyData.success) {
+      showMessage('Verificación fallida. Por favor intenta de nuevo.', 'error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar sugerencia';
+      return;
+    }
+
+    // Si reCAPTCHA es válido, enviar a Formspree
+    const formData = new FormData(form);
+    formData.append('_subject', 'Sugerencia ALL TOQUE');
+    formData.append('_autoresponse', 'Gracias por tu sugerencia. La revisaremos pronto.');
+
+    const formspreeRes = await fetch('https://formspree.io/f/mwvdvdlq', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (formspreeRes.ok) {
+      showMessage('Gracias, tu sugerencia fue enviada.', 'success');
+      form.reset();
+    } else {
+      showMessage('Error al enviar. Por favor intenta más tarde.', 'error');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    showMessage('Error al procesar tu sugerencia.', 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Enviar sugerencia';
+  }
+});
+
+// Iniciar carga de reCAPTCHA al cargar la página
+initRecaptcha();
 </script>
 
 <script src="scripts/nav.js"></script>
