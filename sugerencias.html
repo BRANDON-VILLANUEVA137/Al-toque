@@ -192,27 +192,51 @@ form.addEventListener('submit', async (e) => {
 
     const formspreeRes = await fetch('https://formspree.io/f/mwvdvdlq', {
       method: 'POST',
-      body: formData
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
     });
 
     if (formspreeRes.ok) {
-      showMessage('Gracias, tu sugerencia fue enviada.', 'success');
+      showToast('¡Sugerencia enviada con éxito! Gracias.');
       form.reset();
     } else {
-      showMessage('Error al enviar. Por favor intenta más tarde.', 'error');
+      showToast('Error al enviar. Por favor intenta más tarde.', 'error');
     }
   } catch (error) {
     console.error('Error:', error);
-    showMessage('Error al procesar tu sugerencia.', 'error');
+    showToast('Error al procesar tu sugerencia.', 'error');
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Enviar sugerencia';
   }
 });
 
+// ─── Toast flotante ───
+function showToast(text, type) {
+  const toast = document.getElementById('toast-notification');
+  toast.textContent = text;
+  toast.className = 'toast-visible';
+  if (type === 'error') {
+    toast.style.background = 'var(--red, #B23A2C)';
+  } else {
+    toast.style.background = '#4CAF50';
+  }
+  toast.style.display = 'block';
+  toast.style.opacity = '1';
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => { toast.style.display = 'none'; }, 500);
+  }, 4000);
+}
+
 // Iniciar carga de reCAPTCHA al cargar la página
 initRecaptcha();
 </script>
+
+<!-- Toast flotante -->
+<div id="toast-notification" style="display:none; position:fixed; bottom:80px; right:20px; background:#4CAF50; color:white; padding:16px 24px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.25); font-family:'JetBrains Mono',monospace; font-size:.88rem; z-index:1000; transition:opacity 0.5s ease; max-width:360px; line-height:1.4;"></div>
 
 <script src="scripts/nav.js"></script>
 </div>
