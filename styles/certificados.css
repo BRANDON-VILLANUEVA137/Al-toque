@@ -1,5 +1,6 @@
 /* Certificados-specific styles */
 header{padding:64px 28px 40px; position:relative}
+.title{font-size:clamp(2.6rem, 7vw, 4.6rem); font-weight:800; line-height:.95; letter-spacing:-.02em; color:var(--paper-2)}
 .stamp-corner{position:absolute; top:48px; right:28px; width:84px; height:84px; border:2px solid var(--red); border-radius:50%; display:flex; align-items:center; justify-content:center; transform:rotate(-12deg); opacity:.85}
 .stamp-corner span{font-family:'JetBrains Mono', monospace; font-size:.56rem; letter-spacing:.08em; text-align:center; color:var(--red); line-height:1.25; text-transform:uppercase}
 .controls{max-width:1080px; margin:0 auto; padding:0 28px 28px; position:sticky; top:0; z-index:5; background:linear-gradient(var(--navy) 78%, transparent); padding-top:18px}
